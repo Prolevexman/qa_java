@@ -8,6 +8,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.junit.jupiter.api.extension.ExtendWith;
 
+import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -36,7 +37,14 @@ class CatTest {
         Mockito.when(feline.eatMeat()).thenReturn(expectedFood);
         assertEquals(expectedFood, cat.getFood());
     }
-    //добавить тест на пустой список
+
+    @Test
+    @DisplayName("Проверяет метод getFood() с пустым списком")
+    void shouldProcessEmptyList() throws  Exception {
+        Mockito.when((feline.eatMeat())).thenReturn(Collections.emptyList());
+        List<String> actualFood = cat.getFood();
+        assertEquals(0, actualFood.size(), "Список еды должен быть пустой");
+    }
 
     @Test
     @DisplayName("Проверяет, что метод getFood() пробрасывает Exception")
