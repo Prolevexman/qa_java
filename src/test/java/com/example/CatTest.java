@@ -32,10 +32,11 @@ class CatTest {
 
     @Test
     @DisplayName("Проверяет, что метод getFood() возвращает список еды от Feline")
-    void shouldReturnFoodFromPredator() throws Exception{
+    void shouldInvokeAndReturnResult() throws Exception{
         List<String> expectedFood = List.of("Животные","Птицы", "Рыба");
         Mockito.when(feline.eatMeat()).thenReturn(expectedFood);
-        assertEquals(expectedFood, cat.getFood());
+        assertEquals(expectedFood, cat.getFood(), "getFood() должен возвращать список еды полученный от feline.eatMeat() ");
+        Mockito.verify(feline, Mockito.description("Метод eatMeat() не был вызван")).eatMeat();
     }
 
     @Test
