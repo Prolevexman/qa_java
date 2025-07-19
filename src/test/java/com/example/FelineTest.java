@@ -35,7 +35,7 @@ class FelineTest {
     }
 
     @Test
-    @DisplayName("eatMeat() возывает getFood() с параметром 'Хищник'")
+    @DisplayName("eatMeat() вызывает getFood() с параметром 'Хищник'")
     void eatMeatShouldInvokeGetFoodWithParamCarnivore() throws Exception {
         feline.eatMeat();
         Mockito.verify(feline, Mockito.times(1)).getFood("Хищник");
