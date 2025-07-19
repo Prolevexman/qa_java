@@ -35,10 +35,13 @@ class FelineTest {
     }
 
     @Test
-    @DisplayName("eatMeat() вызывает getFood() с параметром 'Хищник'")
-    void eatMeatShouldInvokeGetFoodWithParamCarnivore() throws Exception {
-        feline.eatMeat();
-        Mockito.verify(feline, Mockito.times(1)).getFood("Хищник");
+    @DisplayName("eatMeat() вызывает getFood() с параметром 'Хищник' и возвращает результат")
+    void eatMeatShouldInvokeGetFoodWithParamCarnivoreAndReturnResult() throws Exception {
+        List<String> expectedFood = List.of("Животные","Птицы", "Рыба");
+        Mockito.doReturn(expectedFood).when(feline).getFood("Хищник");
+        List<String> actual = feline.eatMeat();
+        assertEquals(expectedFood, actual, "getFood() должен возвращать список еды для хищников" );
+        Mockito.verify(feline, Mockito.description("Метод getFood() c параметром 'хищник' не был вызван ")).getFood("Хищник");
     }
 
     @Test
