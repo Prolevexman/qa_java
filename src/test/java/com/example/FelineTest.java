@@ -1,23 +1,24 @@
 package com.example;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mockito;
+import org.mockito.Spy;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+@ExtendWith(MockitoExtension.class)
 class FelineTest {
 
     private static final String FAMILY = "Кошачьи";
-    Feline feline;
 
-    @BeforeEach
-    void setUp() {
-        feline = new Feline();
-    }
+    @Spy
+    private Feline feline;
 
     @Test
     @DisplayName("Проверка, что Feline относится к семейству " + FAMILY)
@@ -27,22 +28,22 @@ class FelineTest {
     }
 
     @Test
-    @DisplayName("По умолчанию возвращается 1 детеныш")
-    void shouldReturnOneYoungByDefault() {
-        assertEquals(1, feline.getKittens(), "По умолчанию должен быть 1 детеныш");
+    @DisplayName("Метод getKittens() без параметров вызывает getKittens c параметром 1")
+    void getKittensNoParamShouldInvokeGetKittensWith1(){
+        feline.getKittens();
+        Mockito.verify(feline, Mockito.times(1)).getKittens(1);
     }
 
     @Test
-    @DisplayName("eatMeat() возвращает список еды для хищников в классе Feline")
-    void shouldReturnCarnivoreFood() throws Exception {
-        List<String> expectedFood = List.of("Животные", "Птицы", "Рыба");
-        List<String> actualFood = feline.eatMeat();
-        assertEquals(expectedFood, actualFood, "Хищники должны питаться мясом");
+    @DisplayName("eatMeat() возывает getFood() с параметром 'Хищник'")
+    void eatMeatShouldInvokeGetFoodWithParamCarnivore() throws Exception {
+        feline.eatMeat();
+        Mockito.verify(feline, Mockito.times(1)).getFood("Хищник");
     }
 
     @Test
     @DisplayName("Проверяет, что метод eatMeat() пробрасывает Exception")
-    void shouldThrowExceptionWhenGetFoodThrows() throws Exception {
+    void shouldThrowExceptionWhenGetFoodThrows() {
         Feline feline = new FelineException();
         Exception exception = assertThrows(Exception.class, feline::eatMeat);
         assertEquals("Исключение в getFood()", exception.getMessage());
