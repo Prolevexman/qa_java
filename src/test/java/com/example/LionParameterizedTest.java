@@ -14,7 +14,7 @@ public class LionParameterizedTest {
     @Mock
     Feline feline;
 
-    @ParameterizedTest("имя")
+    @ParameterizedTest(name = "Пол: {0}, ожидается hasMane = {1}")
     @CsvSource({
             "Самец, true",
             "Самка, false"
