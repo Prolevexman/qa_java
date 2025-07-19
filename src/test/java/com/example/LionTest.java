@@ -30,7 +30,8 @@ public class LionTest {
     void getFoodShouldInvokeAndReturnResult() throws Exception{
         List<String> expectedFood = List.of("Животные","Птицы", "Рыба");
         Mockito.when(feline.eatMeat()).thenReturn(expectedFood);
-        assertEquals(expectedFood, lion.getFood(), "getFood() должен возвращать список еды полученный от feline.eatMeat() ");
+        List<String> actualFood = lion.getFood();
+        assertEquals(expectedFood, actualFood , () -> String.format("Метод getFood() вернул %s, ожидалось %s", actualFood, expectedFood));
         Mockito.verify(feline, Mockito.description("Метод eatMeat() не был вызван")).eatMeat();
     }
 
@@ -39,15 +40,15 @@ public class LionTest {
     void getKittensShouldInvokeAndReturnResult() {
         int expected = 1;
         Mockito.when(feline.getKittens()).thenReturn(expected);
-        assertEquals(expected, lion.getKittens(), "getKittens() должен возвращать количество котян от feline.getKittens()");
+        int actual = lion.getKittens();
+        assertEquals(expected, actual, () -> String.format("Метод getKittens() вернул %s, ожидалось %s", actual, expected));
         Mockito.verify(feline, Mockito.description("Метод getKittens() не был вызван")).getKittens();
     }
 
     @Test
     @DisplayName("Бросает исключение при недопустимом значении пола")
     void constructorShouldThrowsExceptionWhenSexIsInvalid() {
-        Exception exception = assertThrows(Exception.class, () -> {new Lion("Особь 2", feline);
-        });
+        Exception exception = assertThrows(Exception.class, () -> new Lion("Особь 2", feline));
         assertEquals("Используйте допустимые значения пола животного - самец или самка", exception.getMessage());
     }
 }

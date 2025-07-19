@@ -35,7 +35,8 @@ class CatTest {
     void shouldInvokeAndReturnResult() throws Exception{
         List<String> expectedFood = List.of("Животные","Птицы", "Рыба");
         Mockito.when(feline.eatMeat()).thenReturn(expectedFood);
-        assertEquals(expectedFood, cat.getFood(), "getFood() должен возвращать список еды полученный от feline.eatMeat() ");
+        List<String> actual = cat.getFood();
+        assertEquals(expectedFood, actual, () -> String.format("getFood() должен возвращать список еды для хищников, ожидалось %s, вернулось %s", expectedFood, actual));
         Mockito.verify(feline, Mockito.description("Метод eatMeat() не был вызван")).eatMeat();
     }
 

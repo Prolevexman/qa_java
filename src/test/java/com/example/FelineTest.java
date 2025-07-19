@@ -40,7 +40,7 @@ class FelineTest {
         List<String> expectedFood = List.of("Животные","Птицы", "Рыба");
         Mockito.doReturn(expectedFood).when(feline).getFood("Хищник");
         List<String> actual = feline.eatMeat();
-        assertEquals(expectedFood, actual, "getFood() должен возвращать список еды для хищников" );
+        assertEquals(expectedFood, actual, () -> String.format("getFood() должен возвращать список еды для хищников, ожидалось %s, вернулось %s", expectedFood, actual));
         Mockito.verify(feline, Mockito.description("Метод getFood() c параметром 'хищник' не был вызван ")).getFood("Хищник");
     }
 

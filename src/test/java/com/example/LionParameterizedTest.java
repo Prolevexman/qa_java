@@ -21,6 +21,6 @@ public class LionParameterizedTest {
     })
     void testDoesHaveMane(String sex, boolean expected) throws Exception {
         Lion lion = new Lion(sex, feline);
-        assertEquals(expected, lion.doesHaveMane(), "Неверное значение гривы для пола: " + sex);
+        assertEquals(expected, lion.doesHaveMane(), () -> "Неверное значение гривы для пола: " + sex);
     }
 }
